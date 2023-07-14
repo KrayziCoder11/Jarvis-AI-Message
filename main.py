@@ -17,6 +17,11 @@ GAMING_LINKS = ["https://www.chess.com/home", "https://www.youtube.com/"]
 SCHOOL_PROGRAMS = []
 GAMING_PROGRAMS = ["C:\Program Files\Blackmagic Design\DaVinci Resolve\Resolve.exe"]
 
+# wav file name
+FILE_NAME = "audio_clips/ryan_01.wav"
+
+# dict that matches the audio resonse that will be played depending on what the user says
+RESPONSE_DICT = {"school": "", "game": "", "none": ""}
 
 def play_audio(filepath : str):
     """
@@ -48,21 +53,19 @@ def get_user_input():
                 LISTENER.adjust_for_ambient_noise(source2, duration=0.2)
                 
                 #listens for the user's input
-                print("talk noiw")
                 audio_clip = LISTENER.listen(source2)
                 
                 # Using google to recognize audio
                 user_phrase = LISTENER.recognize_google(audio_clip)
                 user_phrase = str(user_phrase).lower()
     
-                if open_links(user_phrase):
-                    print("done")
-                    break
+                result = open_links(user_phrase)
+                if result != "empty":
+                    return result
                 
         except speech_recognition.RequestError as e:
             print("You are currently not connected to the internet, could not request results; {0}".format(e))
 
-            
         except speech_recognition.UnknownValueError:
             print("please speak into the mic")
 
@@ -82,7 +85,7 @@ def open_links(phrase : str):
         for program in SCHOOL_PROGRAMS: #runs programs
             subprocess.Popen([program])
 
-        return True
+        return "school"
 
     #if user said "game"
     elif "game" in phrase or "gaming" in phrase:
@@ -92,31 +95,35 @@ def open_links(phrase : str):
         for program in GAMING_PROGRAMS: #runs programs
             subprocess.Popen([program])
         
-        return True
+        return "game"
 
-    elif phrase.__contains__("no thanks"):
-        return True
+    elif "no thanks" in phrase:
+        return "none"
 
     else:
-        return False
+        return "empty"
 
 def main():
     
-    # wav file name and file path of the initial audio msg
-    audio_file_name = "ryan_01.wav"
-    file_path = os.path.abspath(audio_file_name)
+    # wav file path of the initial audio msg
+    file_path = os.path.abspath(FILE_NAME)
 
     play_audio(file_path)
-    get_user_input()
-
-    # requires import threading
-    # filepath = "C:/Users/JP/OneDrive/Desktop/Personal Code/Power On Audio/ryan_01.wav"
-    # t1 = threading.Thread(target=play_audio, args=(filepath,))
-    # t1.start()
-    # print("no thread")
+    user_response = get_user_input()
+    ai_response = os.path.abspath(RESPONSE_DICT[user_response])
+    play_audio(ai_response)
 
     # t2 = threading.Thread(target=print_thread)
     # t2.start()
+
+    """
+    to do list:
+        - edit initial audio to prompt user to speak
+        - add audio clips to play after the user speaks
+            - customize which clips play depending on what the user says
+        - add audio clips to play when the get_user_input method throws an error
+        - move global variables to config file
+    """
 
 if __name__ =="__main__":
     main()
