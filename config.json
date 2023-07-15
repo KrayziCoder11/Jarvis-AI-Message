@@ -1,0 +1,12 @@
+{
+    "GREETING":"C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_greeting.wav",
+    "SCHOOL_LINKS": [],
+    "GAMING_LINKS": ["https://www.chess.com/home", "https://www.youtube.com/"],
+    "SCHOOL_PROGRAMS": [],
+    "GAMING_PROGRAMS": ["C:/Users/JP/AppData/Local/Discord/app-1.0.9015/Discord.exe"],
+    "RESPONSE_DICT": {
+        "school": "C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_school_response.wav", 
+        "game": "C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_gaming_response.wav", 
+        "none": "C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_null_response.wav"
+    }
+}
