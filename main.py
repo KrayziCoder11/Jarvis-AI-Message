@@ -1,27 +1,37 @@
 from playsound import playsound
 import speech_recognition
 import webbrowser
+import json
 import os
-import subprocess
+
 
 # Initialize the recognizer
 LISTENER = speech_recognition.Recognizer()
 
+# opens config file
+with open("config.json") as file:
+    config = json.load(file)
+
+
 # the urls for the websites
 # HASD TO BE THE FULL URL -- GO TO THE WEBSITE AND COPY IT DIRECTLY
-SCHOOL_LINKS = []
-GAMING_LINKS = ["https://www.chess.com/home", "https://www.youtube.com/"]
+SCHOOL_LINKS = config["SCHOOL_LINKS"]
+GAMING_LINKS = config["GAMING_LINKS"]
 
 # the absolute path for the program launchers
 # the path has to be for the program executable -- not shortcut
-SCHOOL_PROGRAMS = []
-GAMING_PROGRAMS = ["C:\Program Files\Blackmagic Design\DaVinci Resolve\Resolve.exe"]
+# have path use / not \
+SCHOOL_PROGRAMS = config["SCHOOL_PROGRAMS"]
+GAMING_PROGRAMS = config["GAMING_PROGRAMS"]
 
-# wav file name
-FILE_NAME = "audio_clips/ryan_01.wav"
+# wav file paths
+GREETING = config["GREETING"]
 
 # dict that matches the audio resonse that will be played depending on what the user says
-RESPONSE_DICT = {"school": "", "game": "", "none": ""}
+RESPONSE_DICT = config["RESPONSE_DICT"]
+
+file.close() # closes config file
+
 
 def play_audio(filepath : str):
     """
@@ -30,7 +40,7 @@ def play_audio(filepath : str):
     filepath: the filepath of the wav file
     """
     playsound(filepath)
-   
+        
 def get_user_input():
     """
     Listens for the user to say a phrase and then converts that phrase into text.
@@ -83,7 +93,7 @@ def open_links(phrase : str):
             webbrowser.open(link)
 
         for program in SCHOOL_PROGRAMS: #runs programs
-            subprocess.Popen([program])
+            os.startfile(program)
 
         return "school"
 
@@ -93,7 +103,8 @@ def open_links(phrase : str):
             webbrowser.open(link)
 
         for program in GAMING_PROGRAMS: #runs programs
-            subprocess.Popen([program])
+            
+            os.startfile(program)
         
         return "game"
 
@@ -106,23 +117,18 @@ def open_links(phrase : str):
 def main():
     
     # wav file path of the initial audio msg
-    file_path = os.path.abspath(FILE_NAME)
+    play_audio(GREETING)
 
-    play_audio(file_path)
     user_response = get_user_input()
-    ai_response = os.path.abspath(RESPONSE_DICT[user_response])
-    play_audio(ai_response)
 
-    # t2 = threading.Thread(target=print_thread)
-    # t2.start()
+    ai_response = RESPONSE_DICT[user_response]
+    play_audio(ai_response)
 
     """
     to do list:
-        - edit initial audio to prompt user to speak
-        - add audio clips to play after the user speaks
-            - customize which clips play depending on what the user says
         - add audio clips to play when the get_user_input method throws an error
-        - move global variables to config file
+        - write readme
+            - add that os.startfile can be replaced with subprocess.Popen()
     """
 
 if __name__ =="__main__":
