@@ -1,9 +1,15 @@
 {
     "GREETING":"C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_greeting.wav",
-    "SCHOOL_LINKS": [],
-    "GAMING_LINKS": ["https://www.chess.com/home", "https://www.youtube.com/"],
-    "SCHOOL_PROGRAMS": [],
-    "GAMING_PROGRAMS": ["C:/Users/JP/AppData/Local/Discord/app-1.0.9015/Discord.exe"],
+    "SCHOOL_LINKS": [
+        "C:/Users/jp/AppData/Local/Programs/Microsoft VS Code/Code.exe", 
+        "https://mycourses.rit.edu/d2l/login", 
+        "C:/Program Files/Microsoft Office/root/Office16/WINWORD.exe"
+    ],
+    "GAMING_LINKS": [
+        "https://www.chess.com/home", 
+        "https://www.youtube.com/", 
+        "C:/Users/jp/AppData/Local/Discord/app-1.0.9015/Discord.exe"
+    ],
     "RESPONSE_DICT": {
         "school": "C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_school_response.wav", 
         "game": "C:/Users/JP/OneDrive/Desktop/Personal Code/Jarvis-AI-Message/audio_clips/ryan_gaming_response.wav", 
